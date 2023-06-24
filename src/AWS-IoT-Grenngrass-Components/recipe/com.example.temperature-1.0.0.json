@@ -1,0 +1,42 @@
+{
+  "RecipeFormatVersion": "2020-01-25",
+  "ComponentName": "com.example.temperature",
+  "ComponentVersion": "1.0.0",
+  "ComponentDescription": "My temperature component.",
+  "ComponentPublisher": "Me",
+  "ComponentConfiguration": {
+    "DefaultConfiguration": {
+      "message": "hello",
+      "accessControl": {
+        "aws.greengrass.ipc.pubsub": {
+          "com.example.temperature:pubsub:1": {
+            "policyDescription": "Allows access to publish to sensor/temp.",
+            "operations": [
+              "aws.greengrass#PublishToTopic"
+            ],
+            "resources": [
+              "sensor/temp"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "Manifests": [
+    {
+      "Platform": {
+        "os": "linux"
+      },
+      "Lifecycle": {
+        "Install": {
+          "RequiresPrivilege": true,
+          "script": "python3 -m pip install --user awsiotsdk"
+        },
+        "Run": {
+          "RequiresPrivilege": true,
+          "script": "python3 -u {artifacts:path}/temperature.py '{configuration:/message}'"
+        }
+      }
+    }
+  ]
+}

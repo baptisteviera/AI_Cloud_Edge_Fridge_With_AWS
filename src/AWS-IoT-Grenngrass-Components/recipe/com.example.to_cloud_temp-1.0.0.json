@@ -1,0 +1,56 @@
+{
+    "RecipeFormatVersion": "2020-01-25",
+    "ComponentName": "com.example.to_cloud_temp",
+    "ComponentVersion": "1.0.0",
+    "ComponentDescription": "Send temperature to IoT core",
+    "ComponentPublisher": "Me",
+    "ComponentConfiguration": {
+      "DefaultConfiguration": {
+        "message": "hello",
+        "accessControl": {
+          "aws.greengrass.ipc.mqttproxy": {
+            "com.example.to_cloud_temp:mqttproxy:1": {
+              "policyDescription": "3 Allows access to publish to device/temp/data.",
+              "operations": [
+                "aws.greengrass#PublishToIoTCore",
+                "aws.greengrass#SubscribeToIoTCore"
+              ],
+              "resources": [
+                "device/temp/data"
+              ]
+            }
+          },
+
+            "aws.greengrass.ipc.pubsub": {
+              "com.example.to_cloud_temp:pubsub:1": {
+            "policyDescription": "Allows access to subscribe to sensor/temp.",
+            "operations": [
+              "aws.greengrass#SubscribeToTopic"
+            ],
+            "resources": [
+              "sensor/temp"
+            ]
+          }
+
+          }
+          }
+      }
+    },
+    "Manifests": [
+      {
+        "Platform": {
+          "os": "linux"
+        },
+        "Lifecycle": {
+          "Install": {
+            "RequiresPrivilege": true,
+            "script": "python3 -m pip install --user awsiotsdk"
+          },
+          "Run": {
+            "RequiresPrivilege": true,
+            "script": "python3 -u {artifacts:path}/to_cloud_temp.py '{configuration:/message}'"
+          }
+        }
+      }
+    ]
+  }

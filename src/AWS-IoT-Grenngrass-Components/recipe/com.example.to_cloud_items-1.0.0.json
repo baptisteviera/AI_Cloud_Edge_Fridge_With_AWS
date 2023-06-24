@@ -1,0 +1,56 @@
+{
+    "RecipeFormatVersion": "2020-01-25",
+    "ComponentName": "com.example.to_cloud_items",
+    "ComponentVersion": "1.0.0",
+    "ComponentDescription": "Send items to IoT core",
+    "ComponentPublisher": "Me",
+    "ComponentConfiguration": {
+      "DefaultConfiguration": {
+        "message": "hello",
+        "accessControl": {
+          "aws.greengrass.ipc.mqttproxy": {
+            "com.example.to_cloud_items:mqttproxy:1": {
+              "policyDescription": "888888 Allows access to publish to device/temp_cloud/ml",
+              "operations": [
+                "aws.greengrass#PublishToIoTCore",
+                "aws.greengrass#SubscribeToIoTCore"
+              ],
+              "resources": [
+                "device/temp_cloud/ml"
+              ]
+            }
+          },
+
+            "aws.greengrass.ipc.pubsub": {
+              "com.example.to_cloud_items:pubsub:1": {
+            "policyDescription": "Allows access to subscribe to device/temp/ml.",
+            "operations": [
+              "aws.greengrass#SubscribeToTopic"
+            ],
+            "resources": [
+              "device/temp/ml"
+            ]
+          }
+
+          }
+          }
+      }
+    },
+    "Manifests": [
+      {
+        "Platform": {
+          "os": "linux"
+        },
+        "Lifecycle": {
+          "Install": {
+            "RequiresPrivilege": true,
+            "script": "python3 -m pip install --user awsiotsdk"
+          },
+          "Run": {
+            "RequiresPrivilege": true,
+            "script": "python3 -u {artifacts:path}/to_cloud_items.py '{configuration:/message}'"
+          }
+        }
+      }
+    ]
+  }

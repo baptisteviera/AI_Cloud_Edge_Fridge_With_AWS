@@ -1,0 +1,6 @@
+transformers
+pip
+jax
+flax
+flask
+paho_mqtt

@@ -1,0 +1,56 @@
+{
+    "RecipeFormatVersion": "2020-01-25",
+    "ComponentName": "com.example.date",
+    "ComponentVersion": "1.0.0",
+    "ComponentDescription": "Send temperature to IoT core",
+    "ComponentPublisher": "Me",
+    "ComponentConfiguration": {
+      "DefaultConfiguration": {
+        "message": "hello",
+        "accessControl": {
+          "aws.greengrass.ipc.mqttproxy": {
+            "com.example.date:mqttproxy:1": {
+              "policyDescription": "3 Allows access to publish to device/date_expiry/data.",
+              "operations": [
+                "aws.greengrass#PublishToIoTCore",
+                "aws.greengrass#SubscribeToIoTCore"
+              ],
+              "resources": [
+                "device/date_expiry/data"
+              ]
+            }
+          },
+
+            "aws.greengrass.ipc.pubsub": {
+              "com.example.date:pubsub:1": {
+            "policyDescription": "Allows access to subscribe to sensor/button.",
+            "operations": [
+              "aws.greengrass#SubscribeToTopic"
+            ],
+            "resources": [
+              "sensor/button"
+            ]
+          }
+
+          }
+          }
+      }
+    },
+    "Manifests": [
+      {
+        "Platform": {
+          "os": "linux"
+        },
+        "Lifecycle": {
+          "Install": {
+            "RequiresPrivilege": true,
+            "script": "python3 -m pip install --user -r {artifacts:path}/requirements.txt"
+          },
+          "Run": {
+            "RequiresPrivilege": true,
+            "script": "python3 -u {artifacts:path}/date.py '{configuration:/message}'"
+          }
+        }
+      }
+    ]
+  }

@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<!-- ATTENTION L'APP N'EST PAS RESPONSIVE-->
+<!-- Pour voir la fenêtre dans sa globalité il faut dezoomer le navigateur 
+Je me suis mis à 75% de mon côté -->
+
+
+<!-- je n'ai pas utilisé boostrap dans le code -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css">
+<link rel="stylesheet" href="static/css/file.css">
+  <meta http-equiv="refresh" content="5">
+
+</head>
+<body>
+
+<div class="site-wrap">
+
+  <nav class="site-nav">
+<!---->
+    <div class="name">
+      Hello Baptiste !
+
+      <svg width="24" height="24" viewBox="0 0 24 24">
+        <path d="M11.5,22C11.64,22 11.77,22 11.9,21.96C12.55,21.82 13.09,21.38 13.34,20.78C13.44,20.54 13.5,20.27 13.5,20H9.5A2,2 0 0,0 11.5,22M18,10.5C18,7.43 15.86,4.86 13,4.18V3.5A1.5,1.5 0 0,0 11.5,2A1.5,1.5 0 0,0 10,3.5V4.18C7.13,4.86 5,7.43 5,10.5V16L3,18V19H20V18L18,16M19.97,10H21.97C21.82,6.79 20.24,3.97 17.85,2.15L16.42,3.58C18.46,5 19.82,7.35 19.97,10M6.58,3.58L5.15,2.15C2.76,3.97 1.18,6.79 1,10H3C3.18,7.35 4.54,5 6.58,3.58Z"></path>
+      </svg>
+    </div>
+
+    <ul>
+      <li class="active"><a href="#">Fridge</a>
+        <ul>
+          <li><a href="#0">Overview</a></li>
+          <li><a href="#0">Temperature</a></li>
+          <li><a href="#0">Ingredients</a></li>
+          <li><a href="#0">Recipe</a></li>
+
+        </ul>
+      </li>
+      <li><a href="#0">Notifications</a></li>
+      <li><a href="#0">Reports</a></li>
+      <li><a href="#0">Community</a></li>
+      <li><a href="#0">News</a></li>
+      <li><a href="#0">About</a></li>
+    </ul>
+
+    <div class="note">
+      <h3>Your Monthly Report</h3>
+      <p>Get the info about all temperature, ingredients, recipes. And track your consommation.</p>
+    </div>
+
+  </nav>
+
+  <main>
+
+    <header>
+      <div class="breadcrumbs">
+        <a href="#0/">Fridge</a>
+      </div>
+
+      <h1 class="title">Smart Operational Fridge App</h1>
+
+      <nav class="nav-tabs" id="nav-tabs">
+        <a href="#0" class="active">
+          Overview
+          <span>2</span>
+        </a>
+        <a href="#0">
+          Temperature
+          <span>0</span>
+        </a>
+        <a href="#0">
+          Ingredients
+          <span>1</span>
+
+        </a>
+        <a href="#0">
+          Recipes
+          <span>1</span>
+
+        </a>
+      </nav>
+    </header>
+
+    <div class="content-columns">
+      <!-- Attention je n'ai pas codé de la façon la plus optimale -->
+
+      <div class="col1"> <!-- c'est la colonne température -->
+
+          
+        <div style="margin-bottom: 50px;" class="item1">
+          <!-- c'est pas optimale mais j'ai créé un type item* pour chaque colonne 
+            avec des h1 et h2 différents en terme de couleur principalement 
+           item1 => colonne 1 -->
+          <h1>Temperature</h1>
+          <h2> {{temp}} </h2>
+
+        </div>
+        {% if temp > max_temp:%}
+          <div  style="padding-top: 20px;" class="notification is-danger">
+            <button class="delete"></button>
+            <strong>WARNING !</strong> Your fridge is feeling hot.
+            Its body temperature should not exceed <strong>{{max_temp}}°C</strong> !
+          </div>
+        {%endif%}
+
+      </div>
+      <div class="col"> <!-- c'est la colonne ingrédient  -->
+        <div class="item2">
+          <!-- c'est pas optimale mais j'ai créé un type item* pour chaque colonne 
+            avec des h1 et h2 différents en terme de couleur principalement  
+           item2 => colonne 2-->
+          <h1>Aliments</h1>
+            {% for i in ingredient %}
+                <h2>{% print ("{} : {}").format(i, ingredient[i]) %}</h2>
+            {%endfor%}
+        </div>
+      </div>
+      <div class="col"> <!-- c'est la colonne date  -->
+        <div class="item3">
+           <!-- c'est pas optimale mais j'ai créé un type item* pour chaque colonne 
+            avec des h1 et h2 différents en terme de couleur principalement
+           item3 => colonne 3  -->
+          <h1>Expiry date</h1>
+          <h2>{{date}}</h2>
+        </div>
+
+      </div>
+      <div class="col"> <!-- c'est la colonne recette  -->
+        <div class="item4">
+          <!-- c'est pas optimale mais j'ai créé un type item* pour chaque colonne 
+            avec des h1 et h2 différents en terme de couleur principalement 
+          item4 => colonne 4 -->
+          <h1>AI Recipe</h1>
+            {% for i in recipe %}
+                <h2>{% print (i) %}</h2>
+            {%endfor%}
+        </div>
+      </div>
+
+    </div>
+
+  </main>
+
+</div>
+
+</body>
+</html>

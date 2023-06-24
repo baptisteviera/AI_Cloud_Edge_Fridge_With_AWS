@@ -1,0 +1,45 @@
+{
+  "RecipeFormatVersion": "2020-01-25",
+  "ComponentName": "com.example.image_items",
+  "ComponentVersion": "1.0.0",
+  "ComponentDescription": "My items are.",
+  "ComponentPublisher": "Me",
+  "ComponentConfiguration": {
+    "DefaultConfiguration": {
+      "message": "prout",
+      "accessControl": {
+        "aws.greengrass.ipc.pubsub": {
+          "com.example.image_items:pubsub:1": {
+            "policyDescription": "14 Allows access to publish to device/temp/ml and subscribe to sensor/button",
+            "operations": [
+              "aws.greengrass#PublishToTopic",
+              "aws.greengrass#SubscribeToTopic"
+            ],
+            "resources": [
+              "device/temp/ml",
+              "sensor/button"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "Manifests": [
+    {
+      "Platform": {
+        "os": "linux"
+      },
+      "Lifecycle": {
+        "Install": {
+          "RequiresPrivilege": true,
+          "script": "python3 -m pip install --user -r {artifacts:path}/requirements.txt"
+        },
+        "Run": {
+          "RequiresPrivilege": true,
+          "script": "python3 -u {artifacts:path}/image_items.py '{configuration:/message}'"
+        }
+      }
+    }
+  ]
+}
+
